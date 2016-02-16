@@ -1,3 +1,3 @@
-# LeetCode
+# LeetCodeSolutions
 
-It's my answers of LeetCode
+It's my solutions of LeetCode
