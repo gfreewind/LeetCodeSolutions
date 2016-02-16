@@ -28,6 +28,7 @@
 *.app
 
 # Vistual Studio Build Dri
+*.sdf
 ipch/
 Debug/
 
