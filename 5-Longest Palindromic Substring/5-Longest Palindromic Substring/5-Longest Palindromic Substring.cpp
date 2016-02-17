@@ -23,11 +23,12 @@ public:
 
 		int max = 0;
 		string max_str;
+		bool is_odd = false;
+		int middle = 0;
 
 		for (int i = 0; i < len; ++i) {
 			int j;
 			int c;
-			string cur;
 
 			//odd case
 			c = 1;
@@ -36,41 +37,37 @@ public:
 					break;
 				}
 				c = 1 + 2*(j + 1);
-				cur.push_back(s[i - j - 1]);
 			}
 
 			if (c > max) {
+				is_odd = true;
 				max = c;
-				max_str.clear();
-				for (auto it = cur.rbegin(); it != cur.rend(); ++it) {
-					max_str.push_back(*it);
-				}
-				max_str.push_back(s[i]);
-				for (auto it = cur.begin(); it != cur.end(); ++it) {
-					max_str.push_back(*it);
-				}
+				middle = i;
 			}
 
 			//even case
 			c = 0;
-			cur.clear();
 			for (j = 0; i - j >= 0 && i + j + 1 < len; ++j) {
 				if (s[i - j] != s[i + j + 1]) {
 					break;
 				}
 				c = 2*(j + 1);
-				cur.push_back(s[i - j]);
 			}
 			if (c > max) {
+				is_odd = false;
 				max = c;
-				max_str.clear();
-				for (auto it = cur.rbegin(); it != cur.rend(); ++it) {
-					max_str.push_back(*it);
-				}
-				for (auto it = cur.begin(); it != cur.end(); ++it) {
-					max_str.push_back(*it);
-				}
+				middle = i+1;
 			}
+		}
+
+		int half = max / 2;
+
+		if (is_odd) {
+			max_str.append(s, middle - half, half + 1);
+			max_str.append(s, middle + 1, half);
+		}
+		else {
+			max_str.append(s, middle - half, max);
 		}
 
 		return max_str;
