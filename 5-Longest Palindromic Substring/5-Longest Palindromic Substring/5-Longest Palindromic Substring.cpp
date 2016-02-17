@@ -24,16 +24,14 @@ public:
 			return s;
 		}
 
-		std::stringstream tmp;
-		tmp << '$';
+		string ss = "$";
+		ss.reserve(2 * (len + 1));
 		for (auto it = s.begin(); it != s.end(); ++it) {
-			tmp << '#';
-			tmp << *it;
+			ss.push_back('#');
+			ss.push_back(*it);
 		}
-		tmp << '#';
+		ss.push_back('#');
 
-
-		std::string ss = tmp.str();
 		std::vector<int> p(ss.size(), 1);
 
 		int mx = 0;
