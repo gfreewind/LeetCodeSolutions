@@ -24,7 +24,7 @@ public:
 			return s;
 		}
 
-		string ss = "$";
+		string ss("$");
 		ss.reserve(2 * (len + 1));
 		for (auto it = s.begin(); it != s.end(); ++it) {
 			ss.push_back('#');
@@ -36,12 +36,11 @@ public:
 
 		int mx = 0;
 		int max = 1;
-		int i;
 		int id;
 		int middle = 0;
 
 		len = ss.size();
-		for (i = 1; i < len; ++i) {
+		for (int i = 1; i < len; ++i) {
 			if (mx > i) {
 				p[i] = std::min(p[2 * id - i], mx - i);
 			}
@@ -69,12 +68,7 @@ public:
 			}
 		}
 		max--;
-		
-		string max_str;
-		max_str.reserve(max + 1);
-		max_str.append(s, middle - max / 2, max);
-
-		return max_str;
+		return s.substr(middle - max / 2, max);
 	}
 };
 

@@ -21,12 +21,11 @@ struct ListNode {
 class Solution {
 public:
 	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-		ListNode *ret = new ListNode(0);
-		ListNode *cur = ret;
-		ListNode *n = NULL;
-
+		ListNode *ret = NULL;
+		ListNode *last = NULL;
+		ListNode *cur;
+		
 		int o = 0;
-
 		while (l1 || l2 || o) {
 			int s = 0;
 
@@ -47,14 +46,13 @@ public:
 				o = 0;
 			}
 
-			cur->val = s;
-			if (l1 || l2 || o) {
-				n = new ListNode(0);
-				cur->next = n;
-				cur = n;
+			cur = new ListNode(s);
+			if (last) {
+				last->next = cur;
+				last = cur;
 			}
 			else {
-				break;
+				ret = last = cur;
 			}
 		}
 
