@@ -26,9 +26,9 @@ public:
 		ListNode *cur;
 		
 		int o = 0;
+		int s;
 		while (l1 || l2 || o) {
-			int s = 0;
-
+			s = 0;
 			if (l1) {
 				s = l1->val;
 				l1 = l1->next;
