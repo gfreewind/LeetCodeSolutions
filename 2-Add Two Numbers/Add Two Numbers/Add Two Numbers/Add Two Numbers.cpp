@@ -28,7 +28,7 @@ public:
 		int o = 0;
 		int s;
 		while (l1 || l2 || o) {
-			s = 0;
+			s = o;
 			if (l1) {
 				s = l1->val;
 				l1 = l1->next;
@@ -37,7 +37,7 @@ public:
 				s += l2->val;
 				l2 = l2->next;
 			}
-			s += o;
+
 			if (s >= 10) {
 				s -= 10;
 				o = 1;
