@@ -9,10 +9,6 @@ using namespace std;
 class Solution {
 public:
 	bool isPalindrome(int x) {
-		int bits = 1;
-		unsigned long long max_moder = 10;
-		int last_left = 0;
-
 		if (x < 0) {
 			return false;
 		}
@@ -21,28 +17,23 @@ public:
 			return true;
 		}
 
-		while (x > max_moder) {
-			++bits;
-			max_moder *= 10;
+		int div = 10;
+		while (x / div >= 10) {
+			div *= 10;
 		}
-
-		max_moder /= 10;
 
 		int left, right;
 		while (1) {
-			left = x / max_moder;
-			left = left - last_left;
+			left = x / div;
 			right = x % 10;
 
 			if (left != right) {
 				return false;
 			}
-			last_left = (last_left + left)*10;
+			x = (x % div) / 10;
+			div /= 100;
 
-			x /= 10;
-			max_moder /= 100;
-
-			if (max_moder <= 0) {
+			if (div < 10) {
 				break;
 			}
 		}
@@ -62,6 +53,7 @@ static void test_func(int x)
 
 int main()
 {
+	test_func(1000030001);
 	test_func(0);
 	test_func(-1);
 	test_func(10);
