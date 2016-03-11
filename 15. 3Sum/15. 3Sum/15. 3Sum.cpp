@@ -13,10 +13,9 @@ using namespace std;
 
 class Solution {
 public:
-	vector<vector<int>> twoSum(int *nums, int size, int value) {
+	void twoSum(int *nums, int size, int value, vector<vector<int>> &ret) {
 		int left = 0;
 		int right = size - 1;
-		vector<vector<int>> ret;
 
 		while (left < right) {
 			int lv = nums[left];
@@ -48,7 +47,6 @@ public:
 			}
 		}
 
-		return ret;
 	}
 
 	vector<vector<int>> threeSum(vector<int>& nums) {
@@ -68,7 +66,7 @@ public:
 				continue;
 			}
 
-			two_sums = twoSum(&nums[0], i, -nums[i]);
+			twoSum(&nums[0], i, -nums[i], two_sums);
 			if (two_sums.size()) {
 				for (auto it = two_sums.begin(); it != two_sums.end(); ++it) {
 					it->push_back(nums[i]);
