@@ -70,6 +70,9 @@ public:
 			cur = *it;
 			next = cur->next;
 			clists.erase(it);
+			if (!clists.size()) {
+				break;
+			}
 			if (next) {
 				clists.insert(next);
 			}
