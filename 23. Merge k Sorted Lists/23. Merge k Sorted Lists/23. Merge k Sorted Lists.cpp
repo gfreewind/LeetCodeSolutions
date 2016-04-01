@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include <vector>
 #include <set>
+#include <queue>
+#include <deque>
 
 using namespace std;
 
@@ -13,32 +15,33 @@ using namespace std;
 struct ListNode {
      int val;
      ListNode *next;
+	 ListNode():val(0),next(NULL) {}
      ListNode(int x) : val(x), next(NULL) {}
 };
 
-static bool list_node_less(const ListNode *n1, const ListNode *n2)
+static bool list_node_great(const ListNode *n1, const ListNode *n2)
 {
 	if (n1 == NULL) {
-		return true;
+		return false;
 	}
 	if (n2 == NULL) {
-		return true;
+		return false;
 	}
 
-	return (n1->val < n2->val);
+	return (n1->val > n2->val);
 }
 
 struct ListNodeComp {
 	bool operator() (const ListNode* lhs, const ListNode* rhs) const
 	{
-		return list_node_less(lhs, rhs);
+		return list_node_great(lhs, rhs);
 	}
 };
 
 class Solution {
 public:
 	ListNode* mergeKLists(vector<ListNode*>& lists) {
-		multiset<ListNode*, ListNodeComp> clists;
+		priority_queue<ListNode*, vector<ListNode*>, ListNodeComp> cqueue;
 		ListNode *head = NULL;
 		ListNode *cur = NULL;
 		ListNode *next = NULL;
@@ -46,35 +49,34 @@ public:
 		for (auto it = lists.begin(); it != lists.end(); ++it) {
 			cur = *it;
 			if (cur) {
-				clists.insert(cur);
+				cqueue.push(cur);
 			}
 		}
 
-		if (!clists.size()) {
+		if (!cqueue.size()) {
 			return NULL;
 		}
 
-		auto it = clists.begin();
-		head = *it;
-		cur = *it;
 
-		clists.erase(it);
+		head = cqueue.top();
+		cur = head;
+
+		cqueue.pop();
 		next = cur->next;
 		if (next) {
-			clists.insert(next);
+			cqueue.push(next);
 		}
 
-		while (clists.size()) {
-			auto it = clists.begin();
-			cur->next = *it;
-			cur = *it;
+		while (cqueue.size()) {
+			cur->next = cqueue.top();
+			cqueue.pop();
+			cur = cur->next;
 			next = cur->next;
-			clists.erase(it);
-			if (!clists.size()) {
+			if (!cqueue.size()) {
 				break;
 			}
 			if (next) {
-				clists.insert(next);
+				cqueue.push(next);
 			}
 		}
 
@@ -85,6 +87,31 @@ public:
 
 int main()
 {
+	ListNode nodes1[3];
+	ListNode nodes2[3];
+
+	nodes1[0].val = 1;
+	nodes1[0].next = nodes1 + 1;
+	nodes1[1].val = 2;
+	nodes1[1].next = nodes1 + 2;
+	nodes1[2].val = 2;
+	nodes1[2].next = NULL;
+
+	nodes2[0].val = 1;
+	nodes2[0].next = nodes2 + 1;
+	nodes2[1].val = 1;
+	nodes2[1].next = nodes2 + 2;
+	nodes2[2].val = 2;
+	nodes2[2].next = NULL;
+
+	vector<ListNode*> v;
+	v.push_back(nodes1);
+	v.push_back(nodes2);
+
+	Solution s;
+	ListNode *n = s.mergeKLists(v);
+
+
     return 0;
 }
 
