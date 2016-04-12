@@ -20,63 +20,7 @@ class Solution {
 public:
 	ListNode* reverse_nth_nodes(ListNode *head, int n, int* reverse_cnt, ListNode** tail)
 	{
-		ListNode *cur, *next, *last;
-		ListNode *nh;
-		ListNode *nt;
-
-		*reverse_cnt = 0;
-		*tail = NULL;
-		if (n <= 1 || !head) {
-			if (n == 1) {
-				*reverse_cnt = 1;
-			}
-			return head;
-		}
-
-		nt = cur = head;
-
-		int i = 0;
-		nh = NULL;
-		next = NULL;
-		last = NULL;
-		while (cur) {
-			next = cur->next;
-			if (!next) {
-				++i;
-				cur->next = last;
-				last = NULL;
-				nh = cur;
-				break;
-			}
-			cur->next = last;
-			++i;
-			if (i == n) {
-				last = next;
-				nh = cur;
-				break;
-			}
-			last = next->next;
-			next->next = cur;
-			++i;
-			if (i == n) {
-				nh = next;
-				break;
-			}
-			cur = last;
-			last = next;
-		}
-
-		if (i == n) {
-			nt->next = last;
-		}
-
-		if (!nh) {
-			nh = next;
-		}
-
-		*tail = nt;
-		*reverse_cnt = i;
-		return nh;
+			
 	}
 
 	ListNode* reverseKGroup(ListNode* head, int k) {
