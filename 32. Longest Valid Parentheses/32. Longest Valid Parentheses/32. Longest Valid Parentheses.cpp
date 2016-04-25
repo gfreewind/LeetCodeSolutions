@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -16,45 +17,38 @@ public:
 		}
 
 		int max_len = 0;
-		for (uint32_t i = 1; i < s.size(); ++i) {
-			if (')' == s[i]) {
-				int sum = 1;
-				int cnt = 0;
-				for (int j = i - 1; j >= 0; --j) {
-					if ('(' == s[j]) {
-						sum--;
-						if (sum >= 0) {
-							cnt++;
-						}
-						else {
-							break;
-						}
-					}
-					else {
-						sum++;
-					}
-				}
-
-				if (sum > 0) {
-					// Invalid parenthese, need to rollback
-					for (int j = 0; j <= i - 1; ++j) {
-						if (')' == s[j]) {
-							--sum;
-						}
-						else if ('(' == s[j]) {
-							--cnt;
-							++sum;
-						}
-						if (0 == sum) {
-							break;
-						}
-					}
-				}
-
-				if (cnt * 2 > max_len) {
-					max_len = cnt * 2;
+		vector<bool> match(s.size(), false);
+		stack<int> index;
+		// Check the parenthese validity
+		for (uint32_t i = 0; i < s.size(); ++i) {
+			if ('(' == s[i]) {
+				index.push(i);
+			}
+			else if (')' == s[i]) {
+				if (!index.empty()) {
+					int left = index.top();
+					match[left] = true;
+					index.pop();
+					match[i] = true;
 				}
 			}
+		}
+		// check the longest valid parenthese
+		int cur_len = 0;
+		for (uint32_t i = 0; i < s.size(); ++i) {
+			if (match[i]) {
+				cur_len++;
+			}
+			else {
+				if (cur_len > max_len) {
+					max_len = cur_len;
+				}
+				cur_len = 0;
+			}
+		}
+
+		if (cur_len > max_len) {
+			max_len = cur_len;
 		}
 
 		return max_len;
