@@ -26,8 +26,7 @@ public:
 			}
 			else if (')' == s[i]) {
 				if (!index.empty()) {
-					int left = index.top();
-					match[left] = true;
+					match[index.top()] = true;
 					index.pop();
 					match[i] = true;
 				}
