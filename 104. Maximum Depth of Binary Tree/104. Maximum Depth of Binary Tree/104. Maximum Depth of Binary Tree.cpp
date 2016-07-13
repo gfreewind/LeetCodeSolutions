@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include <algorithm>
+#include <stack>
 
 /**
 * Definition for a binary tree node.
@@ -23,20 +24,11 @@ public:
 			return 0;
 		}
 
+		std::stack<TreeNode*> s;
 		TreeNode *n = root;
-		int left = 0;
-		int right = 0;
-
-		depth = 1;
-		if (root->left) {
-			left = maxDepth(root->left);
-		}
-		if (root->right) {
-			right = maxDepth(root->right);
-		}
-
-		int max = std::max(left, right);
-		depth += max;
+		do {
+			
+		} while (n);
 
 		return depth;
 
