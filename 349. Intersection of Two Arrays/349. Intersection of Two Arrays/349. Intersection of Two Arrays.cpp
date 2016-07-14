@@ -19,34 +19,27 @@ public:
 		auto j = nums2.begin();
 
 		for (; i != nums1.end();) {
+			if (ret.size() && *i == ret[ret.size()-1]) {
+				++i;
+				continue;
+			}
+
 			for (; j != nums2.end();) {
 				if (*i == *j) {
-					int c = *i;
-					ret.push_back(c);
-
-					while (i != nums1.end()) {
-						if (*i != c) {
-							break;
-						}
-						++i;
-					}
-					while (j != nums2.end()) {
-						if (*j != c) {
-							break;
-						}
-						++j;
-					}
-					goto out;
+					ret.push_back(*i);
+					++i;
+					++j;
+					break;
 				}
 				else if (*i > *j) {
 					++j;
 				}
 				else {
 					++i;
+					break;
 				}
 			}
 
-out:
 			if (j == nums2.end()) {
 				break;
 			}
